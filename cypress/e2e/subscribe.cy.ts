@@ -1,10 +1,14 @@
-describe("  Test a form", () =>{
+const baseUrl =  Cypress.env("BASE_URL");
+
+describe("Test a form", () =>{
     beforeEach(()=>{
-        cy.visit("http://localhost:3000")
+        cy.visit(baseUrl)
     })
 
     it("suscribe a user with valid email", ()=>{
-        cy.getByData("email-input").type("daryldewilde@gmail.com")
+        cy.fixture("test_data").then((data)=>{
+            cy.getByData("email-input").type(data.valid_email)
+        })
         cy.getByData("submit-button").click()
         cy.getByData("success-message").should("exist")
     })
@@ -14,7 +18,9 @@ describe("  Test a form", () =>{
         cy.getByData("success-message").should("not.exist")
     })
     it("Doesn't suscribe with an already existing email", ()=>{
-        cy.getByData("email-input").type("john@example.com")
+        cy.fixture("test_data").then((data)=>{
+            cy.getByData("email-input").type(data.invalid_email)
+        })
         cy.getByData("submit-button").click()
         cy.getByData("server-error-message").should("exist")
     })

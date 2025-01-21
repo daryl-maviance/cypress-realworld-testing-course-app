@@ -1,6 +1,12 @@
+const baseUrl =  Cypress.env("BASE_URL");
+
 describe('User Journey', () => {
+
+    beforeEach(() => {
+        cy.visit(baseUrl)
+    })
+
     it("User can fin a course on the homepage and complete the course lessons",() => {
-        cy.visit("http://localhost:3000")
         cy .getByData("course-0").find("a").contains("Get started").click()
         cy.location("pathname").should("eq","/testing-your-first-application")
         cy.getByData("next-lesson-button").click()

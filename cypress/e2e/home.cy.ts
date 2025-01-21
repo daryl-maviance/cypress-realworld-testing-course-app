@@ -1,6 +1,8 @@
+const baseUrl =  Cypress.env("BASE_URL");
+
 describe('home page', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000')
+    cy.visit(baseUrl)
   })
 
   context("hero-section", () => {
@@ -30,8 +32,5 @@ describe('home page', () => {
       cy.location("pathname").should("eq", "/cypress-fundamentals/how-to-write-a-test")
     })
   })
-
-
-
 
 })
